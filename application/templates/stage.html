@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}GlucoGuard - Result{% endblock title %}
+{% block local_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dynamic_background.css') }}">
+<style>
+    /*--------------------------------------------------------------
+    # 圓形進度條
+    --------------------------------------------------------------*/
+    .result-main {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        height: 560px;
+    }
+    .result-main .result-item {
+        display: inline-block; 
+        display: flex;
+        justify-content: center;
+        flex: 1;
+    }
+    /*--------------------------------------------------------------
+    # 敘述
+    --------------------------------------------------------------*/
+    #diabetes-content article {
+        background: #FFFFFF;
+        border-radius: 25px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,.25);
+        max-width: 600px;
+        vertical-align: center;
+    }
+    #diabetes-content article h3 {
+        font-weight: bold;
+    }
+    /*--------------------------------------------------------------
+    # 返回首頁按鈕
+    --------------------------------------------------------------*/
+    .end {
+        width: 291px;
+        height: 60px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock local_css %}
+
+{% block content %}
+
+{% include 'dynamic-background.html' %}
+
+<!-- ======= Result Section ======= -->
+<section class="result">
+    <div class="result-main">
+        <div class="result-item" id="circular-progress-bar">
+            <div class="pie" data-pie='{ "size": 400, "round": true, "lineargradient": ["#9334A1", "#C30651", "#DD0055"], "animationSmooth": "1s ease-out", "percent": {{ reliability * 100|int }},"colorSlice": "#6200EA","colorCircle": "#f1f1f1", "fontWeight": "bold" }'></div>
+        </div>
+        <div class="result-item" id="diabetes-content">
+            <article>
+                <h3>
+                    {{ stage_string_title }}
+                </h3>
+                <p>
+                    {{ stage_string_description }}
+                </p>
+            </article>
+        </div>
+    </div>
+    <div class="end">
+        <a data-aos="fade-up" data-aos-delay="200" href="/" id="cloud-btn">
+            Return to Homepage<span></span><span></span><span></span><span></span>
+        </a>
+    </div>
+</section><!-- End Result Section -->
+
+{% endblock content %}
+
+{% block local_js %}
+<script src="https://cdn.jsdelivr.net/gh/tomickigrzegorz/circular-progress-bar@1.2.0/dist/circularProgressBar.min.js"></script>
+<script>
+    const circle = new CircularProgressBar("pie");
+    circle.initial();
+</script>
+{% endblock local_js %}
