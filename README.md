@@ -1,7 +1,7 @@
 # GlucoGuard v1.0
 Last Update: 2024/1/3
 
-
+![alt glucoguard](https://github.com/RogelioKG/GlucoGuard/blob/main/application/static/img/glucoguard-demo.gif?raw=true)
 
 ## Python Version
 3.11.4
