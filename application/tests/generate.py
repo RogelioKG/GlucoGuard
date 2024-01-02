@@ -4,7 +4,7 @@ import time
 import string
 from typing import Any
 
-def generate_random_form() -> dict[str, Any]:
+def random_form() -> dict[str, Any]:
     """隨機生成表單資訊
 
     Returns
@@ -37,16 +37,41 @@ def generate_random_form() -> dict[str, Any]:
     volunteer_dict["GenHlth"] = str(random.randint(1, 5))
     volunteer_dict["MentHlth"] = str(random.randint(0, 30))
     volunteer_dict["PhysHlth"] = str(random.randint(0, 30))
-    volunteer_dict["EmailAddress"] = "".join(random.choice(string.ascii_letters) for _ in range(10)) + "@gmail.com"
+    volunteer_dict["EmailAddress"] = random_var_name(10) + "@gmail.com"
     volunteer_dict["formOpenId_V5"] = "14999403757376451606"
     volunteer_dict["timeToSubmit"] = "20"
     volunteer_dict["event_id"] = "1704018466380_233635142103444_9Ev2l4U"
     volunteer_dict["validatedNewRequiredFieldIDs"] = '{"new":1}'
     return volunteer_dict
 
-def truncated_gauss(sigma: float, *, start: int, end: int):
+def truncated_gauss(sigma: float, *, start: int, end: int) -> int:
+    """回傳隨機整數，其為截斷高斯分布
+
+    Parameters
+    ----------
+    + `sigma` (float) : 標準差
+    + `start` (int) : 下界
+    + `end` (int) : 上界 
+
+    Returns
+    + -------
+    + (int) : 隨機整數
+    """
     mu = (start + end) / 2
     return int(min(end, max(start, random.gauss(mu, sigma))))
+
+def random_var_name(n: int) -> str:
+    """隨機變數名稱
+
+    Parameters
+    ----------
+    + `n` (int) : 字串長度 
+
+    Returns
+    -------
+    + (str) : 隨機變數名稱
+    """
+    return "".join(random.choice(string.ascii_letters) for _ in range(n))
 
     # 表單範例
     # ImmutableDict(
