@@ -1,1 +1,3 @@
-__all__ = ["volunteer"]
+__all__ = [
+    "volunteer"
+]

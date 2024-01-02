@@ -2,12 +2,12 @@
 import os
 
 # third party library
+import joblib
+import pandas as pd
 from flask import Flask
 from pathlib import Path
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
-import joblib
-import pandas as pd
 
 ##################################################
 ################## STAGE_STRINGS #################

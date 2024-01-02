@@ -2,9 +2,10 @@
 from flask import request, render_template
 
 # local library
-from application import app, db, STAGE_STRINGS, MODEL_PRETRAINED
+from application import app, db, STAGE_STRINGS
 from application.models.volunteer import Volunteer
-
+from application.services import volunteer_services
+from application.tests.test_form import create_volunteers, delete_all_volunteers
 
 @app.route("/", methods=["GET"])
 def home():
@@ -18,26 +19,20 @@ def form():
 
 @app.route("/stage", methods=["GET", "POST"])
 def stage():
-    volunteer = Volunteer(**request.form)
-
-    # 模型預測
-    data = volunteer.standardize()
-    result = MODEL_PRETRAINED.predict(data)
-    result_proba = MODEL_PRETRAINED.predict_proba(data)
-    stage = result[0]
-
-    # 資料庫操作
-    (
+    # 實例產生 (內含預測結果)
+    volunteer = volunteer_services.create_volunteer(request.form)
+    # 糖尿病階段
+    stage = max(
         volunteer.Stage0_Reliabilities,
         volunteer.Stage1_Reliabilities,
         volunteer.Stage2_Reliabilities,
-    ) = map(float, result_proba[0])
-    db.session.add(volunteer)
-    db.session.commit()
+    )
+    # 系統信心
+    reliability = getattr(volunteer, f"Stage{stage}_Reliabilities")
 
     return render_template(
         "stage.html",
-        reliability=result_proba[0][stage],
+        reliability=reliability,
         stage_string_title=STAGE_STRINGS["title"][stage],
         stage_string_description=STAGE_STRINGS["description"][stage],
     )
@@ -45,9 +40,12 @@ def stage():
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
-    """ # NotImplemented
-    """
+    """# NotImplemented"""
+    # create_volunteers(10)
+    delete_all_volunteers()
+
+    # find_all
     volunteers = db.session.query(Volunteer).all()
-    print(len(volunteers))
     string_list = [str(volunteer.jsonify()) for volunteer in volunteers]
+
     return "<br>".join(string_list)

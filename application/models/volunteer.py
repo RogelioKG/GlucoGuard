@@ -1,14 +1,15 @@
 # standard library
-from typing import Any
 import datetime
+import uuid
+from typing import Any
 
 # third party library
 from sqlalchemy import Column, Integer, Text, DateTime, Float, UUID
 import pandas as pd
-import uuid
 
 # local library
 from application import db
+
 
 class Volunteer(db.Model):
     __tablename__ = "volunteer"
@@ -42,9 +43,9 @@ class Volunteer(db.Model):
     Income = Column(Integer, nullable=False)
 
     # result_columns
-    Stage0_Reliabilities = Column(Float(8))
-    Stage1_Reliabilities = Column(Float(8))
-    Stage2_Reliabilities = Column(Float(8))
+    Stage0_Reliabilities = Column(Float(8), nullable=False)
+    Stage1_Reliabilities = Column(Float(8), nullable=False)
+    Stage2_Reliabilities = Column(Float(8), nullable=False)
 
     other_columns = tuple([
         "id",
@@ -92,14 +93,14 @@ class Volunteer(db.Model):
         以上皆完成後才能將這筆資料存入資料庫
         """
         for column in Volunteer.data_columns:
-            if column == "BMI":
+            if column == "BMI": # 浮點數
                 setattr(self, column, float(kwargs[column]))
             else:
                 setattr(self, column, int(kwargs[column]))
         for column in Volunteer.other_columns:
-            if column == "id":
-                setattr(self, column, kwargs[column])
-            elif column == "buildDate":
+            if column == "id": # 預設值
+                pass
+            elif column == "buildDate": # 時間戳
                 setattr(self, column, datetime.datetime.utcfromtimestamp(float(kwargs[column]) / 1000))
             else:
                 setattr(self, column, str(kwargs[column])) 
@@ -141,7 +142,6 @@ class Volunteer(db.Model):
         data = pd.DataFrame(volunteer_dict, index=[0])
         return data
 
-    
         # 表單範例
         # ImmutableDict(
         #     [
