@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}GlucoGuard - Result{% endblock title %}
+
+{% block local_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dynamic_background.css') }}">
+{% endblock local_css %}
+
+{% block content %}
+{% include 'dynamic-background.html' %}
+<section class="stats-chart">
+  <div id='chart' class='chart'></div>
+</section>
+{% endblock content %}
+
+{% block local_js %}
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+  var graphs = {{ graphJSON | safe }};
+  Plotly.plot('chart', graphs, {});
+</script>
+{% endblock local_js %}

@@ -4,12 +4,6 @@ import time
 import string
 from typing import Any
 
-# local library
-from application import db
-from application.models.volunteer import Volunteer
-from application.services import volunteer_services
-
-
 def generate_random_form() -> dict[str, Any]:
     """隨機生成表單資訊
 
@@ -36,10 +30,10 @@ def generate_random_form() -> dict[str, Any]:
     volunteer_dict["NoDocbcCost"] = str(random.randint(0, 1))
     volunteer_dict["DiffWalk"] = str(random.randint(0, 1))
     volunteer_dict["Sex"] = str(random.randint(0, 1))
-    volunteer_dict["BMI"] = str(random.gauss(25, 5))
-    volunteer_dict["Age"] = str(random.randint(1, 13))
-    volunteer_dict["Education"] = str(random.randint(1, 6))
-    volunteer_dict["Income"] = str(random.randint(1, 11))
+    volunteer_dict["BMI"] = str(truncated_gauss(10, start=15, end=65))
+    volunteer_dict["Age"] = str(truncated_gauss(3, start=1, end=13))
+    volunteer_dict["Education"] = str(truncated_gauss(1, start=1, end=6))
+    volunteer_dict["Income"] = str(truncated_gauss(2, start=1, end=11))
     volunteer_dict["GenHlth"] = str(random.randint(1, 5))
     volunteer_dict["MentHlth"] = str(random.randint(0, 30))
     volunteer_dict["PhysHlth"] = str(random.randint(0, 30))
@@ -49,6 +43,10 @@ def generate_random_form() -> dict[str, Any]:
     volunteer_dict["event_id"] = "1704018466380_233635142103444_9Ev2l4U"
     volunteer_dict["validatedNewRequiredFieldIDs"] = '{"new":1}'
     return volunteer_dict
+
+def truncated_gauss(sigma: float, *, start: int, end: int):
+    mu = (start + end) / 2
+    return int(min(end, max(start, random.gauss(mu, sigma))))
 
     # 表單範例
     # ImmutableDict(

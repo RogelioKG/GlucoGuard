@@ -11,6 +11,7 @@ Last Update: 2024/1/2
 + **pandas**
 + **xgboost**
 + **joblib**
++ **plotly** (它超胖)
 
 ---
 ### Under Construction...

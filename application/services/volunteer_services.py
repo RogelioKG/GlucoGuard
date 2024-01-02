@@ -1,8 +1,6 @@
 # standard library
 from typing import Any, Mapping
 
-# third party library
-
 # local library
 from application import db, MODEL_PRETRAINED
 from application.models.volunteer import Volunteer
@@ -46,7 +44,7 @@ def get_all_volunteers() -> list[Volunteer]:
 
     Returns
     -------
-    + `volunteers` (list[Volunteer])
+    + `volunteers` (list[Volunteer]) : 所有填表者
     """
     volunteers = db.session.query(Volunteer).all()
     return volunteers

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block title %}GlucoGuard - Result{% endblock title %}
+
 {% block local_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dynamic_background.css') }}">
 <style>
@@ -37,16 +39,14 @@
     --------------------------------------------------------------*/
     .end {
         width: 291px;
-        height: 60px;
+        height: 120px;
         margin: 0 auto;
     }
 </style>
 {% endblock local_css %}
 
 {% block content %}
-
 {% include 'dynamic-background.html' %}
-
 <!-- ======= Result Section ======= -->
 <section class="result">
     <div class="result-main">
@@ -70,7 +70,6 @@
         </a>
     </div>
 </section><!-- End Result Section -->
-
 {% endblock content %}
 
 {% block local_js %}

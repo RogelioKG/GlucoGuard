@@ -2,9 +2,8 @@
 from flask import request, render_template
 
 # local library
-from application import app, db, STAGE_STRINGS
-from application.models.volunteer import Volunteer
-from application.services import volunteer_services
+from application import app, STAGE_STRINGS
+from application.services import volunteer_services, dashboard_services
 from application.tests.generate import generate_random_form
 
 
@@ -25,14 +24,17 @@ def form():
 def stage():
     # 實例產生 (內含預測結果)
     volunteer = volunteer_services.create_volunteer(request.form)
-    # 糖尿病階段
-    stage = max(
+    
+    reliabilities = [
         volunteer.Stage0_Reliabilities,
         volunteer.Stage1_Reliabilities,
         volunteer.Stage2_Reliabilities,
-    )
+    ]
+    
     # 系統信心
-    reliability = getattr(volunteer, f"Stage{stage}_Reliabilities")
+    reliability = max(reliabilities)
+    # 糖尿病階段
+    stage = reliabilities.index(reliability)
 
     return render_template(
         "stage.html",
@@ -47,13 +49,13 @@ def stage():
 def dashboard():
     """# NotImplemented"""
 
-    for _ in range(10):
-        volunteer_services.create_volunteer(generate_random_form())
+    # for _ in range(10):
+    #     volunteer_services.create_volunteer(generate_random_form())
 
     volunteer_services.delete_all_volunteers()
 
-    # find_all
-    volunteers = db.session.query(Volunteer).all()
-    string_list = [str(volunteer.jsonify()) for volunteer in volunteers]
+    volunteers = volunteer_services.get_all_volunteers()
+    graphJSON = dashboard_services.get_chart(volunteers)
 
-    return "<br>".join(string_list)
+    return render_template("dashboard.html", graphJSON=graphJSON)
+    
