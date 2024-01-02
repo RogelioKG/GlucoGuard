@@ -84,7 +84,7 @@ class Volunteer(db.Model):
     ])
 
     def __init__(self, **kwargs: Any) -> None:
-        """填表單者 database table
+        """填表者 database table
         
         僅將存在於 `Volunteer.data_columns` 與 `Volunteer.other_columns` 的 kw 設為 attribute
         
@@ -110,7 +110,7 @@ class Volunteer(db.Model):
 
         Returns
         -------
-        (dict[str, Any])
+        `volunteer_dict` (dict[str, Any])
         """
         volunteer_dict = dict()
         for column in Volunteer.data_columns:
@@ -129,7 +129,7 @@ class Volunteer(db.Model):
 
         Returns
         -------
-        (pd.DataFrame)
+        `data` (pd.DataFrame)
         """
         volunteer_dict = self.jsonify()
         for column in Volunteer.other_columns:
@@ -141,42 +141,3 @@ class Volunteer(db.Model):
                 pass
         data = pd.DataFrame(volunteer_dict, index=[0])
         return data
-
-        # 表單範例
-        # ImmutableDict(
-        #     [
-        #         ("formID", "233635142103444"),
-        #         (
-        #             "jsExecutionTracker",
-        #             "build-date-1704013390989=>init-started:1704018466372=>validator-called:1704018466378=>validator-mounted-true:1704018466378=>init-complete:1704018466381=>interval-complete:1704018487387=>onsubmit-fired:1704018492697=>submit-validation-passed:1704018492700",
-        #         ),
-        #         ("submitSource", "form"),
-        #         ("buildDate", "1704013390989"),  # --> unixtime ms version
-        #         ("HighBP", "1"),
-        #         ("HighChol", "1"),
-        #         ("CholCheck", "0"),
-        #         ("Smoker", "0"),
-        #         ("Stroke", "1"),
-        #         ("HeartDiseaseorAttack", "0"),
-        #         ("PhysActivity", "1"),
-        #         ("Fruits", "0"),
-        #         ("Veggies", "1"),
-        #         ("HvyAlcoholConsump", "0"),
-        #         ("AnyHealthcare", "1"),
-        #         ("NoDocbcCost", "0"),
-        #         ("DiffWalk", "1"),
-        #         ("Sex", "0"),
-        #         ("BMI", "123"),
-        #         ("Age", "11"),
-        #         ("Education", "6"),
-        #         ("Income", "11"),
-        #         ("GenHlth", "3"),
-        #         ("MentHlth", "20"),
-        #         ("PhysHlth", "12"),
-        #         ("EmailAddress", "t126017977@gmail.com"),
-        #         ("formOpenId_V5", "14999403757376451606"),
-        #         ("timeToSubmit", "20"),
-        #         ("event_id", "1704018466380_233635142103444_9Ev2l4U"),
-        #         ("validatedNewRequiredFieldIDs", '{"new":1}'),
-        #     ]
-        # )

@@ -5,18 +5,22 @@ from flask import request, render_template
 from application import app, db, STAGE_STRINGS
 from application.models.volunteer import Volunteer
 from application.services import volunteer_services
-from application.tests.test_form import create_volunteers, delete_all_volunteers
+from application.tests.generate import generate_random_form
 
+
+# 首頁
 @app.route("/", methods=["GET"])
 def home():
     return render_template("home.html")
 
 
+# 表單頁
 @app.route("/form", methods=["GET"])
 def form():
     return render_template("form.html")
 
 
+# 預測結果頁
 @app.route("/stage", methods=["GET", "POST"])
 def stage():
     # 實例產生 (內含預測結果)
@@ -38,11 +42,15 @@ def stage():
     )
 
 
+# 儀表板頁
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
     """# NotImplemented"""
-    # create_volunteers(10)
-    delete_all_volunteers()
+
+    for _ in range(10):
+        volunteer_services.create_volunteer(generate_random_form())
+
+    volunteer_services.delete_all_volunteers()
 
     # find_all
     volunteers = db.session.query(Volunteer).all()

@@ -9,6 +9,16 @@ from application.models.volunteer import Volunteer
 
 
 def create_volunteer(form: Mapping[str, Any]) -> Volunteer:
+    """創建填表者，並預測糖尿病階段，填入資料庫
+
+    Parameters
+    ----------
+    + `form` (Mapping[str, Any]) : 表單
+
+    Returns
+    -------
+    + `volunteer` (Volunteer) : 填表者
+    """
     # 實例產生
     volunteer = Volunteer(**form)
     # 模型預測
@@ -29,3 +39,24 @@ def create_volunteer(form: Mapping[str, Any]) -> Volunteer:
         db.session.rollback()
         
     return volunteer
+
+
+def get_all_volunteers() -> list[Volunteer]:
+    """取得所有填表者
+
+    Returns
+    -------
+    + `volunteers` (list[Volunteer])
+    """
+    volunteers = db.session.query(Volunteer).all()
+    return volunteers
+
+
+def delete_all_volunteers() -> None:
+    """刪除所有填表者
+    """
+    try:
+        db.session.query(Volunteer).delete()
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()

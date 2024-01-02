@@ -11,11 +11,17 @@ from application.services import volunteer_services
 
 
 def generate_random_form() -> dict[str, Any]:
+    """隨機生成表單資訊
+
+    Returns
+    -------
+    + `volunteer_dict` (dict[str, Any]) : 表單資訊
+    """
     volunteer_dict = dict()
     volunteer_dict["formID"] = "233635142103444"
     volunteer_dict["jsExecutionTracker"] = "build-date-1704013390989=>init-started:1704018466372=>validator-called:1704018466378=>validator-mounted-true:1704018466378=>init-complete:1704018466381=>interval-complete:1704018487387=>onsubmit-fired:1704018492697=>submit-validation-passed:1704018492700"
     volunteer_dict["submitSource"] = "form"
-    volunteer_dict["buildDate"] = str(int(time.time() * 1000))  # --> unixtime ms version
+    volunteer_dict["buildDate"] = str(int(time.time() * 1000))  # unixtime (ms)
     volunteer_dict["HighBP"] = str(random.randint(0, 1))
     volunteer_dict["HighChol"] = str(random.randint(0, 1))
     volunteer_dict["CholCheck"] = str(random.randint(0, 1))
@@ -44,15 +50,6 @@ def generate_random_form() -> dict[str, Any]:
     volunteer_dict["validatedNewRequiredFieldIDs"] = '{"new":1}'
     return volunteer_dict
 
-
-def create_volunteers(n: int) -> None:
-    for _ in range(n):
-        volunteer_services.create_volunteer(generate_random_form())
-
-def delete_all_volunteers():
-    db.session.query(Volunteer).delete()
-    db.session.commit()
-
     # 表單範例
     # ImmutableDict(
     #     [
@@ -62,7 +59,7 @@ def delete_all_volunteers():
     #             "build-date-1704013390989=>init-started:1704018466372=>validator-called:1704018466378=>validator-mounted-true:1704018466378=>init-complete:1704018466381=>interval-complete:1704018487387=>onsubmit-fired:1704018492697=>submit-validation-passed:1704018492700",
     #         ),
     #         ("submitSource", "form"),
-    #         ("buildDate", "1704013390989"),  # --> unixtime ms version
+    #         ("buildDate", "1704013390989"),
     #         ("HighBP", "1"),
     #         ("HighChol", "1"),
     #         ("CholCheck", "0"),
