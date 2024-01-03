@@ -1,8 +1,9 @@
 # standard library
 import random
-import time
 import string
+import time
 from typing import Any
+
 
 def random_form() -> dict[str, Any]:
     """隨機生成表單資訊

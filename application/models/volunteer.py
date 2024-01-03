@@ -1,12 +1,12 @@
 # standard library
 import datetime
+import itertools
 import uuid
 from typing import Any
-import itertools
 
 # third party library
-from sqlalchemy import Column, Integer, Text, DateTime, Float, UUID
 import pandas as pd
+from sqlalchemy import Column, Integer, Text, DateTime, Float, UUID
 
 # local library
 from application import db, MODEL_PRETRAINED
@@ -103,9 +103,9 @@ class Volunteer(db.Model):
             else:
                 setattr(self, column, int(kwargs[column]))
         for column in Volunteer.other_columns:
-            if column == "id":  # 預設值
+            if column == "id":  # 已有 uuid 預設值
                 pass
-            elif column == "buildDate":  # 時間戳
+            elif column == "buildDate":  # 時間戳 (unix time ms)
                 setattr(self, column, datetime.datetime.utcfromtimestamp(float(kwargs[column]) / 1000))
             else:
                 setattr(self, column, str(kwargs[column]))

@@ -13,12 +13,10 @@ from application.tests.generate import random_form
 def home():
     return render_template("home.html")
 
-
 # 表單頁
 @app.route("/form", methods=["GET"])
 def form():
     return render_template("form.html")
-
 
 # 預測結果頁
 @app.route("/stage", methods=["GET", "POST"])
@@ -39,15 +37,12 @@ def stage():
         stage_string_description=STAGE_STRINGS["description"][stage],
     )
 
-
 # 儀表板頁
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
-
     # 新增隨機資料
     for _ in range(50):
         volunteer_services.create_volunteer(random_form())
-
     # 刪除所有資料
     # volunteer_services.delete_all_volunteers()
 
