@@ -23,12 +23,10 @@ def form():
 # 預測結果頁
 @app.route("/stage", methods=["GET", "POST"])
 def stage():
-    # 實例產生 (內含預測結果)
+    # 實例產生 (已含預測結果)
     volunteer = volunteer_services.create_volunteer(request.form)
-
     # 系統信心
     reliabilities = [getattr(volunteer, column) for column in Volunteer.result_columns]
-
     # 最高系統信心
     reliability = max(reliabilities)
     # 糖尿病階段

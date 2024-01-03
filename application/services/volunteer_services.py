@@ -17,9 +17,9 @@ def create_volunteer(form: Mapping[str, Any]) -> Volunteer:
     -------
     + `volunteer` (Volunteer) : 填表者
     """
-    # 實例產生
+    # 實例產生 (未含預測結果)
     volunteer = Volunteer(**form)
-    # 模型預測
+    # 模型預測 (填入預測結果)
     volunteer.predict()
     # 資料庫操作
     try:
