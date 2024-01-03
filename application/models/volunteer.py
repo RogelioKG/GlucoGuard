@@ -93,8 +93,8 @@ class Volunteer(db.Model):
     def __init__(self, **kwargs: Any) -> None:
         """填表者 database table
 
-        初始化時，僅將存在於 `Volunteer.data_columns` 與 `Volunteer.other_columns` 的名稱設置屬性，
-        並必須手動將預測結果賦值給 `Volunteer.result_columns` 中的三個屬性，
+        初始化時，僅將存在於 `Volunteer.data_columns` 與 `Volunteer.other_columns` 的名稱設置為屬性，
+        並且必須調用方法 `predict` (`Volunteer.result_columns` 的名稱將設置為屬性，其值為預測結果)，
         以上皆完成後才能將這筆資料存入資料庫。
         """
         for column in Volunteer.data_columns:
@@ -146,7 +146,7 @@ class Volunteer(db.Model):
         return data
 
     def predict(self) -> None:
-        """模型預測，並將結果設置於 `Volunteer.result_columns` 中的三個屬性。"""
+        """將實例丟入模型預測，而 `Volunteer.result_columns` 的名稱將設置為屬性，其值為預測結果"""
         data = self.standardize()
         result_probas = map(float, MODEL_PRETRAINED.predict_proba(data)[0])
         for column, result_proba in zip(Volunteer.result_columns, result_probas):
