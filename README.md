@@ -22,3 +22,14 @@ Last Update: 2024/1/3
 
 ## Setting up the Project
 請參考 [TabulaTalent Backend](https://github.com/thewro11/tabula-talent-backend)，設置同此專案。
+
+## Run this Application
+若你已設置好虛擬環境與 Docker，你可以這樣運行此應用：
++ Windows
+```batch
+.venv\Scripts\activate & docker compose up
+```
+或者直接執行批次檔
+```batch
+test.bat
+```
