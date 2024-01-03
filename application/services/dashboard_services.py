@@ -10,6 +10,7 @@ import plotly.express as px
 from application.services import volunteer_services
 from application.tests.generate import random_var_name
 
+
 def get_volunteers_dataframe() -> pd.DataFrame:
     """獲取包含所有填表者的 DataFrame
 

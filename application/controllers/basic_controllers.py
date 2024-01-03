@@ -26,13 +26,10 @@ def stage():
     # 實例產生 (內含預測結果)
     volunteer = volunteer_services.create_volunteer(request.form)
 
-    reliabilities = [
-        volunteer.Stage0_Reliabilities,
-        volunteer.Stage1_Reliabilities,
-        volunteer.Stage2_Reliabilities,
-    ]
-
     # 系統信心
+    reliabilities = [getattr(volunteer, column) for column in Volunteer.result_columns]
+
+    # 最高系統信心
     reliability = max(reliabilities)
     # 糖尿病階段
     stage = reliabilities.index(reliability)
