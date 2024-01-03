@@ -1,3 +1,3 @@
 @echo off
-.venv\Scripts\activate & docker compose up --build
+.venv\Scripts\activate & docker compose up
 exit
