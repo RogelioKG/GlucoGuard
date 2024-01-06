@@ -12,7 +12,7 @@
         display: flex;
         align-items: center;
         flex-direction: row;
-        height: 560px;
+        height: 550px;
     }
     .result-main .result-item {
         display: inline-block; 
@@ -42,6 +42,22 @@
         height: 120px;
         margin: 0 auto;
     }
+    /*--------------------------------------------------------------
+    # media (還在研究中...)
+    --------------------------------------------------------------*/
+    @media (max-width: 650px) and (min-height: 800px) {
+        .result-main {
+            flex-direction: column;
+            height: 700px;
+        }
+        .result-main .result-item {
+            padding: 10px;
+        }
+        .end {
+            display: none;
+        }
+    }
+
 </style>
 {% endblock local_css %}
 
@@ -51,7 +67,7 @@
 <section class="result">
     <div class="result-main">
         <div class="result-item" id="circular-progress-bar">
-            <div class="pie" data-pie='{ "size": 400, "round": true, "lineargradient": ["#9334A1", "#C30651", "#DD0055"], "animationSmooth": "1s ease-out", "percent": {{ reliability * 100|int }},"colorSlice": "#6200EA","colorCircle": "#f1f1f1", "fontWeight": "bold" }'></div>
+            <div class="pie" data-pie-index="1" data-pie='{ "size": 400, "round": true, "lineargradient": ["#9334A1", "#C30651", "#DD0055"], "animationSmooth": "1s ease-out", "percent": {{ reliability * 100|int }},"colorSlice": "#6200EA","colorCircle": "#f1f1f1", "fontWeight": "bold" }'></div>
         </div>
         <div class="result-item" id="diabetes-content">
             <article>
