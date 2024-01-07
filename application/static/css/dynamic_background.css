@@ -3,7 +3,7 @@
 --------------------------------------------------------------*/
 
 body {
-    background: linear-gradient(315deg, rgb(127, 65, 133), rgba(189,150,203,1) 30%, rgba(246,127,155, 1) 98%);
+    background: linear-gradient(315deg, rgb(127, 65, 133), rgb(189, 150, 203) 30%, rgb(246, 127, 155) 98%);
     background-size: 400% 400%;
     background-attachment: fixed;
     animation: gradient 15s ease infinite;
