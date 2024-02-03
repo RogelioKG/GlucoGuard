@@ -1,10 +1,13 @@
-# GlucoGuard v1.0
-Last Update: 2024/1/3
+# GlucoGuard
 
-![alt glucoguard](https://github.com/RogelioKG/GlucoGuard/blob/main/application/static/img/glucoguard-demo.gif?raw=true)
+<!-- Badges -->
+![Version 1.0.0](https://img.shields.io/badge/version-1.0.0-blue)
+[![Python 3.11.4](https://img.shields.io/badge/python-3.11.4-blue)](https://www.python.org/downloads/release/python-3114/ "More details about Python 3.11.4")
+![Last Update](https://img.shields.io/badge/Last%20Update-2024/1/3-darkgreen)
 
-## Python Version
-3.11.4
+<!-- GIF -->
+![glucoguard](https://github.com/RogelioKG/GlucoGuard/blob/main/application/static/img/glucoguard-demo.gif?raw=true)
+
 
 ## Brief
 填寫表單並透過持久化的預訓練模型，預測當前填表者的糖尿病階段，\
