@@ -1,4 +1,4 @@
-# GlucoGuard Release Notes
+# Changelog
 
 ## v0.1
 
