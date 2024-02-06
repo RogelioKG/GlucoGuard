@@ -1,5 +1,7 @@
+# directory
 __pycache__/
 .venv/
 
+# file
 .env
 .DS_STORE

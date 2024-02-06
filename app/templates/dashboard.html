@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "_base.html" %}
 
 {% block title %}GlucoGuard - Result{% endblock title %}
 
@@ -46,7 +46,7 @@
 {% endblock local_css %}
 
 {% block content %}
-{% include 'dynamic-background.html' %}
+{% include '_dynamic-background.html' %}
 <section class="stats-chart">
   <div class="graph_container">
   {% if graphs %}

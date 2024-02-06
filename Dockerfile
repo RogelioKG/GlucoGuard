@@ -14,7 +14,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # the application crashes without emitting any logs due to buffering.
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /application
+# Flask config
+ENV CONFIG_TYPE="config.DockerDevelopmentConfig"
+
+WORKDIR /app
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
@@ -40,10 +43,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 USER appuser
 
 # Copy the source code into the container.
-COPY . /application
+COPY . /app
 
 # Expose the port that the application listens on.
 EXPOSE 8001
 
 # Run the application.
-CMD flask --app ./main run --debug --host 0.0.0.0 --port 8001
+CMD flask --app app run --debug --host 0.0.0.0 --port 8001

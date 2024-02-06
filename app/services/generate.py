@@ -10,7 +10,7 @@ def random_form() -> dict[str, Any]:
 
     Returns
     -------
-    + `volunteer_dict` (dict[str, Any]) : 表單資訊
+    + `volunteer_dict` (dict[str, Any]) : 表單
     """
     volunteer_dict = dict()
     volunteer_dict["formID"] = "233635142103444"
@@ -45,6 +45,7 @@ def random_form() -> dict[str, Any]:
     volunteer_dict["validatedNewRequiredFieldIDs"] = '{"new":1}'
     return volunteer_dict
 
+
 def truncated_gauss(sigma: float, *, start: int, end: int) -> int:
     """回傳隨機整數，其為截斷高斯分布
 
@@ -55,11 +56,12 @@ def truncated_gauss(sigma: float, *, start: int, end: int) -> int:
     + `end` (int) : 上界 
 
     Returns
-    + -------
+    -------
     + (int) : 隨機整數
     """
     mu = (start + end) / 2
     return int(min(end, max(start, random.gauss(mu, sigma))))
+
 
 def random_var_name(n: int) -> str:
     """隨機變數名稱

@@ -2,27 +2,35 @@
 from flask import request, render_template
 
 # local library
-from application import app, STAGE_STRINGS
-from application.models.volunteer import Volunteer
-from application.services import volunteer_services, dashboard_services
-from application.tests.generate import random_form
+from . import basic_blueprint
+from app import db
+from app.constants import STAGE_STRINGS
+from app.models.volunteer import Volunteer
+from app.services import chart
 
 
 # 首頁
-@app.route("/", methods=["GET"])
+@basic_blueprint.route("/", methods=["GET"])
 def home():
     return render_template("home.html")
 
+
 # 表單頁
-@app.route("/form", methods=["GET"])
+@basic_blueprint.route("/form/", methods=["GET"])
 def form():
     return render_template("form.html")
 
+
 # 預測結果頁
-@app.route("/stage", methods=["GET", "POST"])
+@basic_blueprint.route("/stage/", methods=["GET", "POST"])
 def stage():
-    # 實例產生 (已含預測結果)
-    volunteer = volunteer_services.create_volunteer(request.form)
+    # 實例產生 (未含預測結果)
+    volunteer = Volunteer(request.form)
+    # 模型預測 (填入預測結果)
+    volunteer.predict()
+    # 資料庫操作
+    db.session.add(volunteer)
+    db.session.commit()
     # 系統信心
     reliabilities = [getattr(volunteer, column) for column in Volunteer.result_columns]
     # 最高系統信心
@@ -37,23 +45,15 @@ def stage():
         stage_string_description=STAGE_STRINGS["description"][stage],
     )
 
-# 儀表板頁
-@app.route("/dashboard", methods=["GET"])
-def dashboard():
-    # 新增隨機資料
-    for _ in range(50):
-        volunteer_services.create_volunteer(random_form())
-    # 刪除所有資料
-    # volunteer_services.delete_all_volunteers()
 
+# 儀表板頁
+@basic_blueprint.route("/dashboard/", methods=["GET"])
+def dashboard():
     # 繪圖
     graphs = []
     for column in Volunteer.data_columns:
-        graph = dashboard_services.count_bar_chart(column)
+        graph = chart.count_bar_chart(column)
         if graph:
             graphs.append(graph)
 
-    return render_template(
-        "dashboard.html", 
-        graphs=graphs
-    )
+    return render_template("dashboard.html", graphs=graphs)

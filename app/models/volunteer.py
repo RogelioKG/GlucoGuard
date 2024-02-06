@@ -9,7 +9,8 @@ import pandas as pd
 from sqlalchemy import Column, Integer, Text, DateTime, Float, UUID
 
 # local library
-from application import db, MODEL_PRETRAINED
+from app import db
+from app.constants import MODEL_PRETRAINED
 
 
 class Volunteer(db.Model):
@@ -90,25 +91,38 @@ class Volunteer(db.Model):
         ]
     )
 
-    def __init__(self, **kwargs: Any) -> None:
-        """填表者 database table
+    def __init__(self, form: dict[str, Any]) -> None:
+        """填表者資料結構
 
-        初始化時，僅將存在於 `Volunteer.data_columns` 與 `Volunteer.other_columns` 的名稱設置為屬性，
-        並且必須調用方法 `predict` (`Volunteer.result_columns` 的名稱將設置為屬性，其值為預測結果)，
-        以上皆完成後才能將這筆資料存入資料庫。
+        Parameters
+        ----------
+        + `form` (dict[str, Any]) : 表單
+            - `key` (str) : `Volunteer.data_columns` 與 `Volunteer.other_columns` 中所有的名稱
+            - `value` (Any) : 對應值
+
+        Caution
+        -------
+        初始化後，需再進行預測，方可填入資料庫
+
+        ```py
+        >>> volunteer = Volunteer(form) # 實例產生 (未含預測結果)
+        >>> volunteer.predict()         # 模型預測 (填入預測結果)
+        >>> db.session.add(volunteer)   # 資料庫操作
+        >>> db.session.commit()
+        ```
         """
         for column in Volunteer.data_columns:
             if column == "BMI":  # 浮點數
-                setattr(self, column, float(kwargs[column]))
+                setattr(self, column, float(form[column]))
             else:
-                setattr(self, column, int(kwargs[column]))
+                setattr(self, column, int(form[column]))
         for column in Volunteer.other_columns:
             if column == "id":  # 已有 uuid 預設值
                 pass
             elif column == "buildDate":  # 時間戳 (unix time ms)
-                setattr(self, column, datetime.datetime.utcfromtimestamp(float(kwargs[column]) / 1000))
+                setattr(self, column, datetime.datetime.utcfromtimestamp(float(form[column]) / 1000))
             else:
-                setattr(self, column, str(kwargs[column]))
+                setattr(self, column, str(form[column]))
 
     def jsonify(self) -> dict[str, Any]:
         """轉為 JSON 格式
@@ -146,7 +160,10 @@ class Volunteer(db.Model):
         return data
 
     def predict(self) -> None:
-        """將實例丟入模型預測，而 `Volunteer.result_columns` 的名稱將設置為屬性，其值為預測結果"""
+        """將實例丟入模型預測
+        
+        將 `Volunteer.result_columns` 裡的名稱將設置為屬性，其值為預測結果
+        """
         data = self.standardize()
         result_probas = map(float, MODEL_PRETRAINED.predict_proba(data)[0])
         for column, result_proba in zip(Volunteer.result_columns, result_probas):
