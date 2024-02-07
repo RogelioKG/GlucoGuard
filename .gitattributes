@@ -1,4 +1,5 @@
-app/static/vendor/* linguist-vendored
-app/static/js/* linguist-vendored
 app/static/css/base_style.css linguist-vendored
 app/static/css/form_style.css linguist-vendored
+app/static/html/form.html linguist-vendored
+app/static/js/* linguist-vendored
+app/static/vendor/* linguist-vendored
