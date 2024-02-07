@@ -1,5 +1,6 @@
 # third party library
 from flask import request, render_template
+import pandas as pd
 
 # local library
 from . import basic_blueprint
@@ -49,10 +50,14 @@ def stage():
 # 儀表板頁
 @basic_blueprint.route("/dashboard/", methods=["GET"])
 def dashboard():
+    # 獲取所有填表者的 DataFrame (標準化)
+    volunteers = db.session.query(Volunteer).all()
+    std_volunteers = [volunteer.standardize() for volunteer in volunteers]
+    df = pd.concat(std_volunteers, ignore_index=True)
     # 繪圖
     graphs = []
     for column in Volunteer.data_columns:
-        graph = chart.count_bar_chart(column)
+        graph = chart.count_bar_chart(df, column)
         if graph:
             graphs.append(graph)
 

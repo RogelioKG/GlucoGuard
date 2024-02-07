@@ -1,0 +1,14 @@
+[run]
+data_file = tests/.coverage
+
+include =
+    app/models/*
+    app/services/*
+
+[report]
+exclude_also =
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod

@@ -1,6 +1,8 @@
 # directory
 __pycache__/
+.pytest_cache/
 .venv/
+html_report/
 
 # file
 .env

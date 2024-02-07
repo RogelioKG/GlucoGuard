@@ -2,9 +2,7 @@
 import os
 
 # third party library
-import click
 from flask import Flask
-from flask.cli import AppGroup
 from flask_sqlalchemy import SQLAlchemy
 
 # 資料庫
@@ -47,6 +45,6 @@ def register_blueprints(app: Flask) -> None:
 
 
 def register_cli_commands(app: Flask) -> None:
-    from .commands import db_cli
+    from .tools.commands import db_cli
     
     app.cli.add_command(db_cli)

@@ -1,0 +1,33 @@
+.graph_container {
+  display: flex;
+  padding: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.graph_container .graph_box {
+  padding: 15px;
+}
+.graph_container .chart {
+  display: flex;
+  flex: 0 0 33.3%;
+  justify-content: center;
+  align-items: center;
+  border-width: 15px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: white;
+}
+.graph_container .empty-chart {
+  display: flex;
+  height: 300px;
+  width: 400px;
+  background-color: white;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.box_shadow {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}

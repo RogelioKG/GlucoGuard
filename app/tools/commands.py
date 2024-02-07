@@ -5,7 +5,7 @@ from flask.cli import AppGroup
 # local library
 from app import db
 from app.models.volunteer import Volunteer
-from app.services import generate
+from app.tools import generate
 
 
 # Flask CLI 指令群

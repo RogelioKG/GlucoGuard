@@ -1,12 +1,11 @@
 # standard library
 import datetime
 import itertools
-import uuid
 from typing import Any
 
 # third party library
 import pandas as pd
-from sqlalchemy import Column, Integer, Text, DateTime, Float, UUID
+from sqlalchemy import Column, Integer, Text, DateTime, Float
 
 # local library
 from app import db
@@ -17,7 +16,7 @@ class Volunteer(db.Model):
     __tablename__ = "volunteer"
 
     # other_columns
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(Integer, primary_key=True)
     buildDate = Column(DateTime)
     EmailAddress = Column(Text)
 
@@ -49,46 +48,40 @@ class Volunteer(db.Model):
     Stage1_Reliabilities = Column(Float(8), nullable=False)
     Stage2_Reliabilities = Column(Float(8), nullable=False)
 
-    other_columns = tuple(
-        [
-            "id", 
-            "buildDate", 
-            "EmailAddress"
-        ]
+    other_columns = (
+        "id",
+        "buildDate",
+        "EmailAddress"
     )
 
-    data_columns = tuple(
-        [
-            "HighBP",
-            "HighChol",
-            "CholCheck",
-            "BMI",
-            "Smoker",
-            "Stroke",
-            "HeartDiseaseorAttack",
-            "PhysActivity",
-            "Fruits",
-            "Veggies",
-            "HvyAlcoholConsump",
-            "AnyHealthcare",
-            "NoDocbcCost",
-            "GenHlth",
-            "MentHlth",
-            "PhysHlth",
-            "DiffWalk",
-            "Sex",
-            "Age",
-            "Education",
-            "Income",
-        ]
+    data_columns = (
+        "HighBP",
+        "HighChol",
+        "CholCheck",
+        "BMI",
+        "Smoker",
+        "Stroke",
+        "HeartDiseaseorAttack",
+        "PhysActivity",
+        "Fruits",
+        "Veggies",
+        "HvyAlcoholConsump",
+        "AnyHealthcare",
+        "NoDocbcCost",
+        "GenHlth",
+        "MentHlth",
+        "PhysHlth",
+        "DiffWalk",
+        "Sex",
+        "Age",
+        "Education",
+        "Income"
     )
 
-    result_columns = tuple(
-        [
-            "Stage0_Reliabilities",
-            "Stage1_Reliabilities",
-            "Stage2_Reliabilities"
-        ]
+    result_columns = (
+        "Stage0_Reliabilities",
+        "Stage1_Reliabilities",
+        "Stage2_Reliabilities"
     )
 
     def __init__(self, form: dict[str, Any]) -> None:
@@ -102,7 +95,8 @@ class Volunteer(db.Model):
 
         Caution
         -------
-        初始化後，需再進行預測，方可填入資料庫
+        初始化時，沒有設的欄位預設就是 None。
+        初始化後，需再進行預測，方可填入資料庫。
 
         ```py
         >>> volunteer = Volunteer(form) # 實例產生 (未含預測結果)
@@ -117,12 +111,15 @@ class Volunteer(db.Model):
             else:
                 setattr(self, column, int(form[column]))
         for column in Volunteer.other_columns:
-            if column == "id":  # 已有 uuid 預設值
+            if column == "id":
                 pass
             elif column == "buildDate":  # 時間戳 (unix time ms)
                 setattr(self, column, datetime.datetime.utcfromtimestamp(float(form[column]) / 1000))
             else:
                 setattr(self, column, str(form[column]))
+
+    def __repr__(self) -> str:
+        return pd.Series(self.jsonify()).to_string()
 
     def jsonify(self) -> dict[str, Any]:
         """轉為 JSON 格式
@@ -131,14 +128,15 @@ class Volunteer(db.Model):
         -------
         `volunteer_dict` (dict[str, Any])
         """
-        volunteer_dict = dict()
-        for column in itertools.chain(
-            Volunteer.data_columns, Volunteer.other_columns, Volunteer.result_columns
-        ):
-            try:
-                volunteer_dict[column] = getattr(self, column)
-            except AttributeError:
-                volunteer_dict[column] = None
+        volunteer_dict = {
+            column: getattr(self, column)
+            for column in itertools.chain(
+                Volunteer.data_columns,
+                Volunteer.other_columns,
+                Volunteer.result_columns,
+            )
+        }
+
         return volunteer_dict
 
     def standardize(self) -> pd.DataFrame:
@@ -149,19 +147,16 @@ class Volunteer(db.Model):
         `data` (pd.DataFrame)
         """
         volunteer_dict = self.jsonify()
-        for column in Volunteer.other_columns:
+        for column in itertools.chain(
+            Volunteer.other_columns, Volunteer.result_columns
+        ):
             volunteer_dict.pop(column)
-        for column in Volunteer.result_columns:
-            try:
-                volunteer_dict.pop(column)
-            except KeyError:
-                pass
         data = pd.DataFrame(volunteer_dict, index=[0])
         return data
 
     def predict(self) -> None:
         """將實例丟入模型預測
-        
+
         將 `Volunteer.result_columns` 裡的名稱將設置為屬性，其值為預測結果
         """
         data = self.standardize()

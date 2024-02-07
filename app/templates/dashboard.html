@@ -4,45 +4,7 @@
 
 {% block local_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dynamic_background.css') }}">
-<style>
-  .graph_container {
-    display: flex;
-    padding: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  .graph_container .graph_box {
-    padding: 15px;
-  }
-  .graph_container .chart {
-    display: flex;
-    flex: 0 0 33.3%;
-    justify-content: center;
-    align-items: center;
-    border-width: 15px;
-    border-radius: 15px;
-    border-style: solid;
-    border-color: white;
-  }
-
-  .graph_container .empty-chart {
-    display: flex;
-    height: 300px;
-    width: 400px;
-    background-color: white;
-    border-radius: 15px;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    
-  }
-
-  .box_shadow {
-    box-shadow: 0 5px 20px rgba(0,0,0,.25);
-  }
-
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock local_css %}
 
 {% block content %}
@@ -50,9 +12,9 @@
 <section class="stats-chart">
   <div class="graph_container">
   {% if graphs %}
-    {% for graph_name, graphJSON in graphs %}
+    {% for graph_id, graphJSON in graphs %}
     <div class="graph_box">
-      <div id='chart_{{ graph_name }}' class='chart box_shadow'></div>
+      <div id='{{ graph_id }}' class='chart box_shadow'></div>
     </div>
     {% endfor %}
   {% else %}
@@ -68,9 +30,9 @@
 <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 {% if graphs %}
   <script type='text/javascript'>
-    {% for graph_name, graphJSON in graphs %}
-      var {{ graph_name }} = {{ graphJSON | safe }};
-      Plotly.plot('chart_{{ graph_name }}', {{ graph_name }}, {});
+    {% for graph_id, graphJSON in graphs %}
+      var {{ graph_id }} = {{ graphJSON | safe }};
+      Plotly.plot('{{ graph_id }}', {{ graph_id }}, {});
     {% endfor %}
   </script>
 {% endif %}

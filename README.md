@@ -3,7 +3,9 @@
 ![Version 0.2.0](https://img.shields.io/badge/version-0.2.0-blue)
 [![Python 3.11.4](https://img.shields.io/badge/python-3.11.4-blue)](https://www.python.org/downloads/release/python-3114/ "More details about Python 3.11.4")
 ![Last Update](https://img.shields.io/badge/last%20update-2024/2/6-darkgreen)
+![Coverage](https://img.shields.io/badge/coverage-88%-darkgreen)
 [![Licence](https://img.shields.io/github/license/RogelioKG/GlucoGuard)](./LICENSE)
+
 
 
 ## Brief
@@ -14,15 +16,18 @@
 
 
 ## Requirements
-+ **Flask**
-+ **Flask-SQLAlchemy**
+
++ **flask**
 + **python-dotenv**
 + **psycopg2-binary**
++ **Flask-SQLAlchemy**
 + **pandas**
 + **xgboost**
 + **joblib**
 + **plotly**
-+ **pytest** <span style="color: gray;">**(#todo)**</span>
++ **coverage**
++ **pytest**
+
 
 ## Running the Flask Application
 若你已設置好虛擬環境，並開啟 Docker 應用程式，你可以這樣運行此應用
@@ -57,3 +62,6 @@
     ```bat
     scripts\test_run.bat
     ```
+
+## Change Log
+> You can see more notable changes to this project in [CHANGELOG.md](./CHANGELOG.md).
