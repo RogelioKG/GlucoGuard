@@ -3,7 +3,7 @@
 ![Version 0.2.0](https://img.shields.io/badge/version-0.2.0-blue)
 [![Python 3.11.4](https://img.shields.io/badge/python-3.11.4-blue)](https://www.python.org/downloads/release/python-3114/ "More details about Python 3.11.4")
 ![Last Update](https://img.shields.io/badge/last%20update-2024/2/6-darkgreen)
-![Coverage](https://img.shields.io/badge/coverage-88%-darkgreen)
+![Coverage](https://img.shields.io/badge/coverage-88%25-darkgreen)
 [![Licence](https://img.shields.io/github/license/RogelioKG/GlucoGuard)](./LICENSE)
 
 
