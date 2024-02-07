@@ -58,9 +58,13 @@
 
 ## Testing
 
-  + 單元測試 <span style="color: gray;">**(#todo)**</span>
+  + 單元測試 (並產生 .coverage)
     ```bat
     scripts\test_run.bat
+    ```
+  + 覆蓋率報告 (需存在 .coverage)
+    ```bat
+    scripts\test_report.bat
     ```
 
 ## Change Log
