@@ -1,2 +1,1 @@
-app/static/vendor/* linguist-vendored
-*.html  linguist-detectable=false
+app/static/vendor linguist-vendored
