@@ -1,1 +1,4 @@
-app/static/vendor/* linguist-vendored=false
+app/static/vendor/* linguist-vendored
+app/static/js/* linguist-vendored
+app/static/css/base_style.css linguist-vendored
+app/static/css/form_style.css linguist-vendored
