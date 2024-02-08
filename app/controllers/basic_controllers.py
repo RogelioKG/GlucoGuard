@@ -50,10 +50,14 @@ def stage():
 # 儀表板頁
 @basic_blueprint.route("/dashboard/", methods=["GET"])
 def dashboard():
-    # 獲取所有填表者的 DataFrame (標準化)
+    # 獲取所有填表者標準化 DataFrame
     volunteers = db.session.query(Volunteer).all()
     std_volunteers = [volunteer.standardize() for volunteer in volunteers]
-    df = pd.concat(std_volunteers, ignore_index=True)
+    try:
+        df = pd.concat(std_volunteers, ignore_index=True)
+    except ValueError:
+        df = pd.DataFrame(columns=[*Volunteer.data_columns, *Volunteer.other_columns, *Volunteer.result_columns])
+
     # 繪圖
     graphs = []
     for column in Volunteer.data_columns:

@@ -7,6 +7,7 @@ include =
 
 [report]
 exclude_also =
+    def generate
     def __repr__
     raise NotImplementedError
     if __name__ == .__main__.:

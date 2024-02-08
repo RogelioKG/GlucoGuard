@@ -13,6 +13,7 @@ def count_bar_chart(df: pd.DataFrame, column: str) -> (tuple[str, str] | None):
 
     Parameters
     ----------
+    + `df` (pd.DataFrame) : 所有填表者標準化 DataFrame
     + `column` (str) : Volunteer 欄位名稱
 
     Returns

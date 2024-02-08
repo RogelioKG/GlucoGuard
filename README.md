@@ -1,9 +1,9 @@
 # GlucoGuard
 <!-- Badges -->
-![Version 0.2.0](https://img.shields.io/badge/version-0.2.0-blue)
+![Version 0.2.1](https://img.shields.io/badge/version-0.2.1-blue)
 [![Python 3.11.4](https://img.shields.io/badge/python-3.11.4-blue)](https://www.python.org/downloads/release/python-3114/ "More details about Python 3.11.4")
 ![Last Update](https://img.shields.io/badge/last%20update-2024/2/6-darkgreen)
-![Coverage](https://img.shields.io/badge/coverage-88%25-darkgreen)
+![Coverage](https://img.shields.io/badge/coverage-89%25-darkgreen)
 [![Licence](https://img.shields.io/github/license/RogelioKG/GlucoGuard)](./LICENSE)
 
 
@@ -27,10 +27,14 @@
 + **plotly**
 + **coverage**
 + **pytest**
++ **tqdm**
 
 
 ## Running the Flask Application
 若你已設置好虛擬環境，並開啟 Docker 應用程式，你可以這樣運行此應用
+
+> [!CAUTION]
+> 由於存在第三方 JS 腳本 / CSS 樣式表，強烈建議連網運行，否則將導致功能或格式缺損
 
 + **Windows**
 
@@ -51,10 +55,11 @@
     ```bat
     flask db clear
     ```
-  + 生成 10 筆填表者 mock data
+  + 生成 500 筆填表者 mock data
     ```bat
-    flask db generate-volunteers 10
+    flask db generate --volunteer 500
     ```
+
 
 ## Testing
 
@@ -67,5 +72,6 @@
     scripts\test_report.bat
     ```
 
-## Change Log
-> You can see more notable changes to this project in [CHANGELOG.md](./CHANGELOG.md).
+
+## Changelog
+> See notable changes to this project in [CHANGELOG.md](./CHANGELOG.md).
